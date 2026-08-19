@@ -247,6 +247,7 @@ input[type="text"], input[type="number"], input[type="date"] {
 .calculadora { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 0.5rem; }
 .calculadora.hidden { display: none; }
 .calculadora h3 { margin: 0 0 0.75rem; font-size: 0.95rem; }
+.calc-hint { font-size: 0.8rem; color: var(--text-muted); margin: 0 0 0.5rem; }
 .calculadora label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; }
 .calculadora label input { width: 100%; margin-top: 0.25rem; }
 .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 0.75rem; }

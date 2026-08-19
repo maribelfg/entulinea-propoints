@@ -437,11 +437,14 @@ function renderResultadosBusqueda(query) {
 }
 
 function actualizarCalculoManual() {
-  const p = parseFloat(document.getElementById("calc-proteina").value) || 0;
-  const c = parseFloat(document.getElementById("calc-carbo").value) || 0;
-  const g = parseFloat(document.getElementById("calc-grasa").value) || 0;
-  const f = parseFloat(document.getElementById("calc-fibra").value) || 0;
-  const pp = calcularPP(p, c, g, f);
+  // Nutrientes introducidos por 100g (como en el etiquetado), escalados a los gramos reales de la ración.
+  const p100 = parseFloat(document.getElementById("calc-proteina").value) || 0;
+  const c100 = parseFloat(document.getElementById("calc-carbo").value) || 0;
+  const g100 = parseFloat(document.getElementById("calc-grasa").value) || 0;
+  const f100 = parseFloat(document.getElementById("calc-fibra").value) || 0;
+  const gramosRacion = parseFloat(document.getElementById("calc-gramos-racion").value) || 0;
+  const factor = gramosRacion / 100;
+  const pp = calcularPP(p100 * factor, c100 * factor, g100 * factor, f100 * factor);
   document.getElementById("calc-resultado-pp").textContent = pp;
   return pp;
 }
@@ -480,20 +483,20 @@ async function init() {
     document.getElementById("calculadora-manual").classList.toggle("hidden");
   });
 
-  ["calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra"].forEach(id => {
+  ["calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra", "calc-gramos-racion"].forEach(id => {
     document.getElementById(id).addEventListener("input", actualizarCalculoManual);
   });
 
   document.getElementById("btn-add-calculado").addEventListener("click", () => {
     const nombre = document.getElementById("calc-nombre").value.trim();
     if (!nombre) { alert("Ponle un nombre al alimento."); return; }
-    const racion = document.getElementById("calc-racion").value.trim();
-    if (!racion) { alert("Indica a qué cantidad o ración corresponden esos nutrientes (ej. 10g, 1 cucharada)."); return; }
+    const gramosRacion = parseFloat(document.getElementById("calc-gramos-racion").value);
+    if (!gramosRacion || gramosRacion <= 0) { alert("Indica los gramos de tu ración."); return; }
     const pp = actualizarCalculoManual();
     const alimento = {
       nombre,
       categoria: "Personalizado",
-      racion,
+      racion: `${gramosRacion}g`,
       pp,
       saciante_dnc: false,
       fuente: "calculadora manual",
@@ -508,7 +511,7 @@ async function init() {
     cerrarModal();
     renderHoy();
     // reset calculadora
-    ["calc-nombre", "calc-racion", "calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra"].forEach(id => {
+    ["calc-nombre", "calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra", "calc-gramos-racion"].forEach(id => {
       document.getElementById(id).value = "";
     });
     document.getElementById("calc-guardar").checked = false;

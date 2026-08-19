@@ -124,17 +124,18 @@
       <label>Nombre del alimento
         <input type="text" id="calc-nombre" placeholder="Ej. Tortilla de patatas">
       </label>
-      <label>Cantidad / ración a la que corresponden estos nutrientes
-        <input type="text" id="calc-racion" placeholder="Ej. 10g, 1 cucharada, 30ml">
-      </label>
+      <p class="calc-hint">Introduce los valores tal como aparecen en la etiqueta, por 100g:</p>
       <div class="calc-grid">
-        <label>Proteína (g)<input type="number" id="calc-proteina" min="0" step="0.1"></label>
-        <label>Carbohidratos (g)<input type="number" id="calc-carbo" min="0" step="0.1"></label>
-        <label>Grasa (g)<input type="number" id="calc-grasa" min="0" step="0.1"></label>
-        <label>Fibra (g)<input type="number" id="calc-fibra" min="0" step="0.1"></label>
+        <label>Proteína /100g<input type="number" id="calc-proteina" min="0" step="0.1"></label>
+        <label>Carbohidratos /100g<input type="number" id="calc-carbo" min="0" step="0.1"></label>
+        <label>Grasa /100g<input type="number" id="calc-grasa" min="0" step="0.1"></label>
+        <label>Fibra /100g<input type="number" id="calc-fibra" min="0" step="0.1"></label>
       </div>
+      <label>Gramos de tu ración
+        <input type="number" id="calc-gramos-racion" min="1" step="1" placeholder="Ej. 30">
+      </label>
       <div class="calc-resultado">
-        PP calculados: <strong id="calc-resultado-pp">0</strong>
+        PP para esa ración: <strong id="calc-resultado-pp">0</strong>
       </div>
       <div class="calc-actions">
         <label class="checkbox-row">
