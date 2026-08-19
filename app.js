@@ -159,11 +159,19 @@ function todosLosAlimentos() {
   return [...ALIMENTOS, ...state.alimentosPersonalizados];
 }
 
+const STOPWORDS = new Set(["de", "del", "la", "el", "los", "las", "y", "o", "con", "sin", "un", "una"]);
+
 function buscarAlimentos(query) {
-  const q = query.trim().toLowerCase();
-  if (!q) return [];
+  const palabras = query.trim().toLowerCase().split(/\s+/).filter(p => p && !STOPWORDS.has(p));
+  if (palabras.length === 0) return [];
   return todosLosAlimentos()
-    .filter(a => a.nombre.toLowerCase().includes(q))
+    .filter(a => {
+      // Muchos nombres de la BD histórica vienen "recortados" porque en la fuente
+      // original la categoría hacía de encabezado (ej. bajo "Quesos" -> "Manchego
+      // curado", sin la palabra "queso"). Se busca en nombre + categoría a la vez.
+      const texto = (a.nombre + " " + (a.categoria || "")).toLowerCase();
+      return palabras.every(p => texto.includes(p));
+    })
     .slice(0, 40);
 }
 
