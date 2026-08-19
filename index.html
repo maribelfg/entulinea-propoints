@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>entulínea ProPoints</title>
+<title>Devorapuntos</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="topbar">
-  <h1>entulínea <span>ProPoints</span></h1>
+  <h1><span class="logo-pac">●</span>DEVORA<span class="accent">PUNTOS</span></h1>
   <nav class="tabs">
     <button class="tab-btn active" data-view="hoy">Hoy</button>
     <button class="tab-btn" data-view="extra">Extra</button>
@@ -24,13 +24,19 @@
     <div class="saldo-cards">
       <div class="card saldo-card" id="card-capital">
         <span class="card-label">Capital diario</span>
-        <span class="card-value" id="capital-restante">--</span>
-        <span class="card-sub">de <span id="capital-total">--</span> PP</span>
+        <div class="hp-row">
+          <span class="card-value" id="capital-restante">--</span>
+          <span class="card-sub">/ <span id="capital-total">--</span> PP</span>
+        </div>
+        <div class="hp-bar hp-bar-capital"><div class="hp-fill" id="hp-fill-capital"></div></div>
       </div>
       <div class="card saldo-card" id="card-extra">
         <span class="card-label">Extra semanal</span>
-        <span class="card-value" id="extra-restante">--</span>
-        <span class="card-sub">de 49 PP</span>
+        <div class="hp-row">
+          <span class="card-value" id="extra-restante">--</span>
+          <span class="card-sub">/ 49 PP</span>
+        </div>
+        <div class="hp-bar hp-bar-extra"><div class="hp-fill" id="hp-fill-extra"></div></div>
       </div>
     </div>
 
@@ -42,49 +48,53 @@
       </div>
     </div>
 
-    <button id="btn-add-alimento" class="btn-primary btn-add">+ Añadir alimento</button>
+    <button id="btn-add-alimento" class="btn-primary btn-add">+ ZAMPAR ALGO</button>
 
     <div class="lista-dia" id="lista-dia-por-franja"></div>
-    <p id="lista-vacia" class="empty-msg">Todavía no has añadido nada hoy.</p>
+    <p id="lista-vacia" class="empty-msg">Tablero vacío. ¡Dale al botón amarillo!</p>
   </section>
 
   <!-- VISTA: EXTRA SEMANAL -->
   <section id="view-extra" class="view">
     <div class="card saldo-card wide">
       <span class="card-label">Extra semanal restante</span>
-      <span class="card-value" id="extra-restante-2">--</span>
-      <span class="card-sub">de 49 PP · semana del <span id="semana-inicio">--</span></span>
+      <div class="hp-row">
+        <span class="card-value" id="extra-restante-2">--</span>
+        <span class="card-sub">/ 49 PP</span>
+      </div>
+      <div class="hp-bar hp-bar-extra"><div class="hp-fill" id="hp-fill-extra-2"></div></div>
+      <span class="card-sub" style="margin-top:0.35rem">semana del <span id="semana-inicio">--</span></span>
     </div>
 
     <div class="reserva-form">
-      <h2>Reservar puntos para una ocasión</h2>
+      <h2>Guardar puntos para una ocasión</h2>
       <div class="form-row">
-        <input type="text" id="reserva-etiqueta" placeholder="Ej. cena del sábado">
-        <input type="number" id="reserva-pp" placeholder="PP" min="1" step="1">
-        <button id="btn-reservar" class="btn-secondary">Reservar</button>
+        <input type="text" id="reserva-etiqueta" placeholder="Ej. cena del sábado" aria-label="Etiqueta de la reserva">
+        <input type="number" id="reserva-pp" placeholder="PP" min="1" step="1" aria-label="Puntos a reservar">
+        <button id="btn-reservar" class="btn-secondary">Guardar</button>
       </div>
     </div>
 
     <div class="reservas-list-wrap">
-      <h2>Reservas de esta semana</h2>
+      <h2>Guardado para luego</h2>
       <ul id="lista-reservas" class="registros-list"></ul>
-      <p id="reservas-vacia" class="empty-msg">No tienes puntos reservados.</p>
+      <p id="reservas-vacia" class="empty-msg">Nada apartado todavía.</p>
     </div>
   </section>
 
   <!-- VISTA: PESO -->
   <section id="view-peso" class="view">
     <div class="peso-form">
-      <h2>Registrar peso</h2>
+      <h2>Marcador de peso</h2>
       <div class="form-row">
-        <input type="date" id="peso-fecha">
-        <input type="number" id="peso-valor" placeholder="kg" min="1" step="0.1">
+        <input type="date" id="peso-fecha" aria-label="Fecha del registro">
+        <input type="number" id="peso-valor" placeholder="kg" min="1" step="0.1" aria-label="Peso en kilogramos">
         <button id="btn-add-peso" class="btn-secondary">Guardar</button>
       </div>
     </div>
     <div class="peso-grafica-wrap">
       <canvas id="peso-canvas" width="600" height="260"></canvas>
-      <p id="peso-vacio" class="empty-msg">Todavía no hay registros de peso.</p>
+      <p id="peso-vacio" class="empty-msg">Sin partidas jugadas todavía.</p>
     </div>
     <div class="peso-lista-wrap">
       <ul id="lista-peso" class="registros-list"></ul>
@@ -93,9 +103,9 @@
 
   <!-- VISTA: HISTÓRICO -->
   <section id="view-historico" class="view">
-    <h2>Días anteriores</h2>
+    <h2>Partidas anteriores</h2>
     <ul id="lista-historico" class="historico-list"></ul>
-    <p id="historico-vacio" class="empty-msg">Todavía no hay días registrados.</p>
+    <p id="historico-vacio" class="empty-msg">Todavía no hay partidas jugadas.</p>
   </section>
 
 </main>
@@ -104,7 +114,7 @@
 <div id="modal-alimento" class="modal-overlay hidden">
   <div class="modal">
     <div class="modal-header">
-      <h2>Añadir alimento</h2>
+      <h2>¿Qué te zampas?</h2>
       <button class="modal-close" id="modal-close-btn" aria-label="Cerrar">&times;</button>
     </div>
 
@@ -131,7 +141,7 @@
     <ul id="resultados-alimento" class="resultados-list"></ul>
 
     <div class="calculadora-toggle">
-      <button id="btn-abrir-calculadora" class="btn-link">¿No lo encuentras? Calcular por nutrientes →</button>
+      <button id="btn-abrir-calculadora" class="btn-link">¿No está en el mapa? Calcúlalo tú →</button>
     </div>
 
     <div id="calculadora-manual" class="calculadora hidden">
@@ -161,12 +171,17 @@
       <div class="calc-actions">
         <label class="checkbox-row">
           <input type="checkbox" id="calc-guardar">
-          Guardar en mi lista de alimentos
+          Guardar en el mapa para la próxima
         </label>
         <button id="btn-add-calculado" class="btn-primary">Añadir al día</button>
       </div>
     </div>
   </div>
+</div>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite">
+  <span id="toast-msg"></span>
+  <button id="toast-undo" class="toast-undo">DESHACER</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>

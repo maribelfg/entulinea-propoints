@@ -99,6 +99,16 @@ function extraRestante(lunes) {
 const FRANJAS = ["desayuno", "comida", "cena", "snack"];
 const FRANJA_LABEL = { desayuno: "Desayuno", comida: "Comida", cena: "Cena", snack: "Snack" };
 
+// Barra de HP como refuerzo visual del número, nunca su sustituto: el valor
+// exacto siempre está impreso al lado (auditoría UX — una barra sola es ambigua).
+function actualizarHpBar(elId, restante, total) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  const pct = Math.max(0, Math.min(100, (restante / total) * 100));
+  el.style.width = pct + "%";
+  el.classList.toggle("low", restante <= total * 0.15);
+}
+
 // ---------- Lógica de añadir alimento (según esquema_tecnico.md) ----------
 function registrarAlimento(fecha, alimento, franja) {
   const dia = getDia(fecha);
@@ -145,6 +155,34 @@ function borrarRegistro(fecha, id) {
   const dia = getDia(fecha);
   dia.registros = dia.registros.filter(r => r.id !== id);
   saveState();
+}
+
+// ---------- Toast de confirmación + deshacer ----------
+// Auditoría UX: añadir es un tap silencioso e instantáneo, fácil de duplicar
+// sin querer (doble tap, repetir la búsqueda). El toast confirma qué se añadió
+// y da unos segundos para deshacerlo sin tener que ir a buscar la fila a mano.
+let toastTimeoutId = null;
+function mostrarToast(mensaje, fecha) {
+  const dia = getDia(fecha);
+  const ultimoId = dia.registros[dia.registros.length - 1]?.id;
+  const toast = document.getElementById("toast");
+  const msgEl = document.getElementById("toast-msg");
+  const undoBtn = document.getElementById("toast-undo");
+
+  msgEl.textContent = mensaje;
+  toast.classList.remove("hidden");
+  clearTimeout(toastTimeoutId);
+
+  const nuevoUndo = undoBtn.cloneNode(true);
+  undoBtn.replaceWith(nuevoUndo);
+  nuevoUndo.addEventListener("click", () => {
+    if (ultimoId) borrarRegistro(fecha, ultimoId);
+    toast.classList.add("hidden");
+    clearTimeout(toastTimeoutId);
+    renderHoy();
+  });
+
+  toastTimeoutId = setTimeout(() => toast.classList.add("hidden"), 4000);
 }
 
 // ---------- Fórmula calculadora manual ----------
@@ -266,6 +304,8 @@ function buscarAlimentos(query, categoria, ppMin, ppMax) {
 
   if (!hayTexto && !hayCategoria && !hayPpMin && !hayPpMax) return [];
 
+  const primeraPalabra = palabras[0] || "";
+
   const resultados = todosLosAlimentos()
     .filter(a => {
       if (hayTexto) {
@@ -290,8 +330,22 @@ function buscarAlimentos(query, categoria, ppMin, ppMax) {
         if (pp > Number(ppMax)) return false;
       }
       return true;
-    })
-    .sort((a, b) => (a.pp ?? 0) - (b.pp ?? 0));
+    });
+
+  if (hayTexto) {
+    // Ranking: nombre que EMPIEZA por la palabra buscada > nombre que contiene
+    // la palabra como palabra completa > solo substring (ej. "pollo" no debe
+    // enterrarse bajo "Repollo" — auditoría UX). El PP solo desempata.
+    const rango = (a) => {
+      const nombre = quitarAcentos(a.nombre.toLowerCase());
+      if (nombre.startsWith(primeraPalabra)) return 0;
+      if (new RegExp("\\b" + primeraPalabra).test(nombre)) return 1;
+      return 2;
+    };
+    resultados.sort((a, b) => rango(a) - rango(b) || (a.pp ?? 0) - (b.pp ?? 0));
+  } else {
+    resultados.sort((a, b) => (a.pp ?? 0) - (b.pp ?? 0));
+  }
 
   // El límite de 60 solo tiene sentido para acotar una búsqueda de texto libre
   // sin más filtros (podría matchear cientos de nombres parecidos). Con
@@ -315,10 +369,12 @@ function renderHoy() {
   const capEl = document.getElementById("capital-restante");
   capEl.textContent = capRest;
   capEl.classList.toggle("negative", capRest < 0);
+  actualizarHpBar("hp-fill-capital", capRest, CAPITAL_DIARIO_PP);
 
   const extEl = document.getElementById("extra-restante");
   extEl.textContent = extRest;
   extEl.classList.toggle("negative", extRest < 0);
+  actualizarHpBar("hp-fill-extra", extRest, EXTRA_SEMANAL_PP);
 
   document.querySelectorAll(".modo-btn").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.modo === dia.modalidad);
@@ -391,6 +447,7 @@ function renderExtra() {
   const rest = extraRestante(lunes);
   extEl.textContent = rest;
   extEl.classList.toggle("negative", rest < 0);
+  actualizarHpBar("hp-fill-extra-2", rest, EXTRA_SEMANAL_PP);
 
   const lista = document.getElementById("lista-reservas");
   const vacio = document.getElementById("reservas-vacia");
@@ -487,6 +544,14 @@ function drawPesoChart(pesos) {
   ctx.font = "11px sans-serif";
   ctx.fillText(max.toFixed(1) + " kg", 4, pad);
   ctx.fillText(min.toFixed(1) + " kg", 4, h - pad + 4);
+
+  // Fechas del primer y último punto en el eje X (auditoría UX: sin esto no
+  // se sabe a qué fecha corresponde cada inflexión de la gráfica).
+  ctx.textAlign = "left";
+  ctx.fillText(formatFechaCorta(pesos[0].fecha), x(0), h - 6);
+  ctx.textAlign = "right";
+  ctx.fillText(formatFechaCorta(pesos[pesos.length - 1].fecha), x(pesos.length - 1), h - 6);
+  ctx.textAlign = "left";
 }
 
 // ---------- Render: histórico ----------
@@ -603,7 +668,6 @@ function renderResultadosBusqueda() {
   cont.innerHTML = "";
   resultados.forEach(a => {
     const li = document.createElement("li");
-    li.className = "resultado-item";
     const sinPpVerificado = a.pp === null || a.pp === undefined;
     const fecha = todayStr();
     const modalidadHoy = getDia(fecha).modalidad;
@@ -611,6 +675,7 @@ function renderResultadosBusqueda() {
     // todo": si el alimento es saciante y hoy es DNC, vale 0 sin duda, aunque
     // no sepamos su valor fuera de DNC.
     const sePuedeAnadirHoy = !sinPpVerificado || (a.saciante_dnc && modalidadHoy === "dnc");
+    li.className = "resultado-item" + (sePuedeAnadirHoy ? "" : " disabled");
     const ppTexto = sinPpVerificado
       ? (a.saciante_dnc && modalidadHoy === "dnc" ? "0 PP (DNC)" : "?? PP")
       : a.pp + " PP";
@@ -618,19 +683,18 @@ function renderResultadosBusqueda() {
     li.innerHTML = `
       <div class="registro-info">
         <span class="resultado-nombre">${escapeHtml(a.nombre)} ${saciante}</span>
-        <span class="resultado-meta">${escapeHtml(a.categoria)} · ${escapeHtml(a.racion || "")}</span>
+        <span class="resultado-meta">${escapeHtml(a.categoria)} · ${escapeHtml(a.racion || "")}${sePuedeAnadirHoy ? "" : " · sin valor fuera de DNC"}</span>
       </div>
       <span class="registro-pp">${ppTexto}</span>
     `;
-    li.addEventListener("click", () => {
-      if (!sePuedeAnadirHoy) {
-        alert("Este alimento no tiene un valor ProPoints verificado fuera de DNC. Cambia a modo DNC (si es saciante) o usa la calculadora manual para asignarle un valor.");
-        return;
-      }
-      registrarAlimento(fecha, a, franjaSeleccionada);
-      cerrarModal();
-      renderHoy();
-    });
+    if (sePuedeAnadirHoy) {
+      li.addEventListener("click", () => {
+        registrarAlimento(fecha, a, franjaSeleccionada);
+        cerrarModal();
+        renderHoy();
+        mostrarToast(`${a.nombre} — ¡ÑAM!`, fecha);
+      });
+    }
     cont.appendChild(li);
   });
 }
@@ -722,6 +786,7 @@ async function init() {
     saveState();
     cerrarModal();
     renderHoy();
+    mostrarToast(`${nombre} — ¡ÑAM!`, todayStr());
     // reset calculadora
     ["calc-nombre", "calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra", "calc-gramos-racion"].forEach(id => {
       document.getElementById(id).value = "";
