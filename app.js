@@ -265,7 +265,7 @@ function buscarAlimentos(query, categoria, ppMax) {
 
   if (!hayTexto && !hayCategoria && !hayPpMax) return [];
 
-  return todosLosAlimentos()
+  const resultados = todosLosAlimentos()
     .filter(a => {
       if (hayTexto) {
         // Muchos nombres de la BD histórica vienen "recortados" porque en la
@@ -284,8 +284,15 @@ function buscarAlimentos(query, categoria, ppMax) {
       }
       return true;
     })
-    .sort((a, b) => (a.pp ?? 0) - (b.pp ?? 0))
-    .slice(0, 60);
+    .sort((a, b) => (a.pp ?? 0) - (b.pp ?? 0));
+
+  // El límite de 60 solo tiene sentido para acotar una búsqueda de texto libre
+  // sin más filtros (podría matchear cientos de nombres parecidos). Con
+  // categoría y/o PP máximo activos, el propio filtro ya acota el volumen que
+  // el usuario quiere ver — cortar ahí ocultaba resultados reales (ej. "todas
+  // las categorías, PP<=3" corta antes de llegar a ver nada por encima de 0).
+  const filtrosAcotan = hayCategoria || hayPpMax;
+  return filtrosAcotan ? resultados : resultados.slice(0, 60);
 }
 
 // ---------- Render: vista Hoy ----------
