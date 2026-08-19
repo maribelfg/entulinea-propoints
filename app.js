@@ -198,6 +198,36 @@ function mostrarToast(mensaje, fecha) {
   toastTimeoutId = setTimeout(() => toast.classList.add("hidden"), 4000);
 }
 
+// ---------- Game over: aviso al agotar capital o extra ----------
+// Se dispara una sola vez por saldo y por día (flag en el propio registro del
+// día), no en cada render — si no, reaparecería cada vez que se repinta Hoy.
+const GAMEOVER_MSGS_CAPITAL = [
+  "Te has zampado todo el capital diario. A partir de aquí, tira de Extra.",
+  "Capital diario liquidado. El resto del día va con Extra semanal.",
+];
+const GAMEOVER_MSGS_EXTRA = [
+  "Extra semanal a cero. Toca esperar al lunes o hacer DNC con alimentos saciantes.",
+  "Se acabó el Extra de esta semana. Los saciantes en DNC siguen gratis.",
+];
+
+function comprobarGameOver(dia, capRest, extRest) {
+  if (capRest <= 0 && !dia.gameOverCapital) {
+    dia.gameOverCapital = true;
+    saveState();
+    mostrarGameOver(GAMEOVER_MSGS_CAPITAL[Math.floor(Math.random() * GAMEOVER_MSGS_CAPITAL.length)]);
+  }
+  if (extRest <= 0 && !dia.gameOverExtra) {
+    dia.gameOverExtra = true;
+    saveState();
+    mostrarGameOver(GAMEOVER_MSGS_EXTRA[Math.floor(Math.random() * GAMEOVER_MSGS_EXTRA.length)]);
+  }
+}
+
+function mostrarGameOver(mensaje) {
+  document.getElementById("gameover-msg").textContent = mensaje;
+  document.getElementById("gameover-overlay").classList.remove("hidden");
+}
+
 // ---------- Fórmula calculadora manual ----------
 function calcularPP(proteina, carbo, grasa, fibra) {
   const val = (proteina / 10) + (carbo / 10) + (grasa / 4) + (fibra / 30);
@@ -383,11 +413,15 @@ function renderHoy() {
   capEl.textContent = capRest;
   capEl.classList.toggle("negative", capRest < 0);
   actualizarHpBar("hp-fill-capital", capRest, CAPITAL_DIARIO_PP);
+  document.getElementById("card-capital").classList.toggle("agotado", capRest <= 0);
 
   const extEl = document.getElementById("extra-restante");
   extEl.textContent = extRest;
   extEl.classList.toggle("negative", extRest < 0);
   actualizarHpBar("hp-fill-extra", extRest, EXTRA_SEMANAL_PP);
+  document.getElementById("card-extra").classList.toggle("agotado", extRest <= 0);
+
+  comprobarGameOver(dia, capRest, extRest);
 
   document.querySelectorAll(".modo-btn").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.modo === dia.modalidad);
@@ -450,10 +484,11 @@ function renderHoy() {
 }
 
 // ---------- Render: vista Extra ----------
-function renderExtra() {
+// Resumen semanal en vivo del Extra — vive dentro de Histórico (antes era su
+// propia pestaña, redundante con lo que Histórico ya mostraba por día).
+function renderResumenSemanal() {
   const fecha = todayStr();
   const lunes = mondayOfWeek(fecha);
-  const semana = getSemana(lunes);
 
   document.getElementById("semana-inicio").textContent = formatFechaCorta(lunes);
   const extEl = document.getElementById("extra-restante-2");
@@ -461,33 +496,6 @@ function renderExtra() {
   extEl.textContent = rest;
   extEl.classList.toggle("negative", rest < 0);
   actualizarHpBar("hp-fill-extra-2", rest, EXTRA_SEMANAL_PP);
-
-  const lista = document.getElementById("lista-reservas");
-  const vacio = document.getElementById("reservas-vacia");
-  lista.innerHTML = "";
-  if (semana.reservas.length === 0) {
-    vacio.style.display = "block";
-  } else {
-    vacio.style.display = "none";
-    semana.reservas.slice().reverse().forEach(r => {
-      const li = document.createElement("li");
-      li.className = "registro-item";
-      li.innerHTML = `
-        <div class="registro-info">
-          <span class="registro-nombre">${escapeHtml(r.etiqueta)}</span>
-          <span class="registro-meta">reservado</span>
-        </div>
-        <span class="registro-pp">${r.pp} PP</span>
-        <button class="btn-del" data-id="${r.id}" aria-label="Eliminar">&times;</button>
-      `;
-      li.querySelector(".btn-del").addEventListener("click", () => {
-        semana.reservas = semana.reservas.filter(x => x.id !== r.id);
-        saveState();
-        renderExtra();
-      });
-      lista.appendChild(li);
-    });
-  }
 }
 
 // ---------- Render: vista Peso ----------
@@ -569,6 +577,8 @@ function drawPesoChart(pesos) {
 
 // ---------- Render: histórico ----------
 function renderHistorico() {
+  renderResumenSemanal();
+
   const lista = document.getElementById("lista-historico");
   const vacio = document.getElementById("historico-vacio");
   const fechas = Object.keys(state.dias).sort().reverse();
@@ -636,7 +646,6 @@ function switchView(view) {
   document.getElementById("view-" + view).classList.add("active");
   document.querySelector(`.tab-btn[data-view="${view}"]`).classList.add("active");
   if (view === "hoy") renderHoy();
-  if (view === "extra") renderExtra();
   if (view === "peso") renderPeso();
   if (view === "historico") renderHistorico();
 }
@@ -755,6 +764,9 @@ async function init() {
   document.getElementById("modal-alimento").addEventListener("click", (e) => {
     if (e.target.id === "modal-alimento") cerrarModal();
   });
+  document.getElementById("gameover-close").addEventListener("click", () => {
+    document.getElementById("gameover-overlay").classList.add("hidden");
+  });
 
   document.getElementById("buscador-alimento").addEventListener("input", renderResultadosBusqueda);
   document.getElementById("filtro-categoria").addEventListener("change", renderResultadosBusqueda);
@@ -811,19 +823,6 @@ async function init() {
     });
     document.getElementById("calc-guardar").checked = false;
     document.getElementById("calc-resultado-pp").textContent = "0";
-  });
-
-  document.getElementById("btn-reservar").addEventListener("click", () => {
-    const etiqueta = document.getElementById("reserva-etiqueta").value.trim();
-    const pp = parseInt(document.getElementById("reserva-pp").value, 10);
-    if (!etiqueta || !pp || pp <= 0) { alert("Indica una etiqueta y una cantidad de PP válida."); return; }
-    const lunes = mondayOfWeek(todayStr());
-    const semana = getSemana(lunes);
-    semana.reservas.push({ id: Date.now() + "-" + Math.random().toString(36).slice(2, 7), etiqueta, pp });
-    saveState();
-    document.getElementById("reserva-etiqueta").value = "";
-    document.getElementById("reserva-pp").value = "";
-    renderExtra();
   });
 
   document.getElementById("btn-add-peso").addEventListener("click", () => {

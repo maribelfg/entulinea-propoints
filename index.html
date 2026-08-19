@@ -11,7 +11,6 @@
   <h1><span class="logo-pac">●</span>DEVORA<span class="accent">PUNTOS</span></h1>
   <nav class="tabs">
     <button class="tab-btn active" data-view="hoy">Hoy</button>
-    <button class="tab-btn" data-view="extra">Extra</button>
     <button class="tab-btn" data-view="peso">Peso</button>
     <button class="tab-btn" data-view="historico">Histórico</button>
   </nav>
@@ -55,33 +54,6 @@
   </section>
 
   <!-- VISTA: EXTRA SEMANAL -->
-  <section id="view-extra" class="view">
-    <div class="card saldo-card wide">
-      <span class="card-label">Extra semanal restante</span>
-      <div class="hp-row">
-        <span class="card-value" id="extra-restante-2">--</span>
-        <span class="card-sub">/ 49 PP</span>
-      </div>
-      <div class="hp-bar hp-bar-extra"><div class="hp-fill" id="hp-fill-extra-2"></div></div>
-      <span class="card-sub" style="margin-top:0.35rem">semana del <span id="semana-inicio">--</span></span>
-    </div>
-
-    <div class="reserva-form">
-      <h2>Guardar puntos para una ocasión</h2>
-      <div class="form-row">
-        <input type="text" id="reserva-etiqueta" placeholder="Ej. cena del sábado" aria-label="Etiqueta de la reserva">
-        <input type="number" id="reserva-pp" placeholder="PP" min="1" step="1" aria-label="Puntos a reservar">
-        <button id="btn-reservar" class="btn-secondary">Guardar</button>
-      </div>
-    </div>
-
-    <div class="reservas-list-wrap">
-      <h2>Guardado para luego</h2>
-      <ul id="lista-reservas" class="registros-list"></ul>
-      <p id="reservas-vacia" class="empty-msg">Nada apartado todavía.</p>
-    </div>
-  </section>
-
   <!-- VISTA: PESO -->
   <section id="view-peso" class="view">
     <div class="peso-form">
@@ -103,6 +75,16 @@
 
   <!-- VISTA: HISTÓRICO -->
   <section id="view-historico" class="view">
+    <div class="card saldo-card wide">
+      <span class="card-label">Extra semanal restante</span>
+      <div class="hp-row">
+        <span class="card-value" id="extra-restante-2">--</span>
+        <span class="card-sub">/ 49 PP</span>
+      </div>
+      <div class="hp-bar hp-bar-extra"><div class="hp-fill" id="hp-fill-extra-2"></div></div>
+      <span class="card-sub" style="margin-top:0.35rem">semana del <span id="semana-inicio">--</span></span>
+    </div>
+
     <h2>Partidas anteriores</h2>
     <ul id="lista-historico" class="historico-list"></ul>
     <p id="historico-vacio" class="empty-msg">Todavía no hay partidas jugadas.</p>
@@ -182,6 +164,14 @@
 <div id="toast" class="toast hidden" role="status" aria-live="polite">
   <span id="toast-msg"></span>
   <button id="toast-undo" class="toast-undo">DESHACER</button>
+</div>
+
+<div id="gameover-overlay" class="gameover-overlay hidden" role="alertdialog" aria-live="assertive">
+  <div class="gameover-card">
+    <h2 class="gameover-title">GAME OVER</h2>
+    <p class="gameover-msg" id="gameover-msg"></p>
+    <button id="gameover-close" class="gameover-close">SEGUIR JUGANDO</button>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>

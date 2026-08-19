@@ -97,8 +97,10 @@ body {
   background: none;
   border: none;
   padding: 0.85rem 0.25rem;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--text-muted);
   border-bottom: 3px solid transparent;
   cursor: pointer;
@@ -167,6 +169,19 @@ main {
 }
 .hp-bar-extra .hp-fill { background: var(--accent-2); }
 .hp-fill.low { background: var(--danger); }
+
+/* Estado permanente mientras un saldo está a 0 o negativo. */
+.saldo-card.agotado {
+  border-color: var(--danger);
+  animation: agotado-pulse 1.8s ease-in-out infinite;
+}
+@keyframes agotado-pulse {
+  0%, 100% { box-shadow: 0 2px 0 rgba(0,0,0,0.4); }
+  50% { box-shadow: 0 2px 0 rgba(0,0,0,0.4), 0 0 0 2px rgba(255,93,115,0.35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .saldo-card.agotado { animation: none; }
+}
 
 .modalidad-selector {
   display: flex;
@@ -466,6 +481,57 @@ input:focus-visible, select:focus-visible, button:focus-visible {
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 .toast span { font-size: 0.85rem; color: var(--text); font-weight: 600; }
+/* Game over: aparece una vez por saldo agotado, más grande y con parpadeo
+   estilo arcade, pero nunca bloquea la interacción (el sistema real no
+   impedía pasarse de puntos, solo lo avisaba). */
+.gameover-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  background: rgba(0,0,0,0.55);
+  padding: 1.5rem;
+}
+.gameover-overlay.hidden { display: none; }
+.gameover-card {
+  background: var(--surface);
+  border: 3px solid var(--danger);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  max-width: 320px;
+  animation: gameover-flicker 1.1s steps(2) 3;
+}
+@keyframes gameover-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gameover-card { animation: none; }
+}
+.gameover-title {
+  font-family: var(--font-pixel);
+  font-size: 1.3rem;
+  color: var(--danger);
+  margin: 0 0 0.75rem;
+  letter-spacing: 0.05em;
+}
+.gameover-msg { font-size: 0.85rem; color: var(--text); margin: 0 0 1.25rem; line-height: 1.5; }
+.gameover-close {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.7rem 1.5rem;
+  font-family: var(--font-pixel);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+}
+
 .toast-undo {
   background: none;
   border: none;
