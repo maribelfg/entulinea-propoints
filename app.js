@@ -149,6 +149,19 @@ function registrarAlimento(fecha, alimento, franja) {
 
   dia.registros.push(registro);
   saveState();
+  return registro;
+}
+
+// Frase de origen para el toast — el usuario pidió que quede claro cuándo un
+// bocado toca el Extra semanal, en vez de solo enterarse mirando la tarjeta.
+function fraseOrigenToast(registro) {
+  switch (registro.origen_descuento) {
+    case "ninguno": return "sin coste (DNC)";
+    case "capital_diario": return "de tu capital diario";
+    case "extra_semanal": return "¡tocó tu Extra semanal!";
+    case "capital_diario+extra_semanal": return `capital agotado — ${registro.pp_desde_extra} PP de tu Extra`;
+    default: return "";
+  }
 }
 
 function borrarRegistro(fecha, id) {
@@ -694,10 +707,10 @@ function renderResultadosBusqueda() {
     `;
     if (sePuedeAnadirHoy) {
       li.addEventListener("click", () => {
-        registrarAlimento(fecha, a, franjaSeleccionada);
+        const registro = registrarAlimento(fecha, a, franjaSeleccionada);
         cerrarModal();
         renderHoy();
-        mostrarToast(`${a.nombre} — ¡ÑAM!`, fecha);
+        mostrarToast(`${a.nombre} — ¡ÑAM! (${fraseOrigenToast(registro)})`, fecha);
       });
     }
     cont.appendChild(li);
@@ -787,11 +800,11 @@ async function init() {
     if (document.getElementById("calc-guardar").checked) {
       state.alimentosPersonalizados.push(alimento);
     }
-    registrarAlimento(todayStr(), alimento, franjaSeleccionada);
+    const registro = registrarAlimento(todayStr(), alimento, franjaSeleccionada);
     saveState();
     cerrarModal();
     renderHoy();
-    mostrarToast(`${nombre} — ¡ÑAM!`, todayStr());
+    mostrarToast(`${nombre} — ¡ÑAM! (${fraseOrigenToast(registro)})`, todayStr());
     // reset calculadora
     ["calc-nombre", "calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra", "calc-gramos-racion"].forEach(id => {
       document.getElementById(id).value = "";
