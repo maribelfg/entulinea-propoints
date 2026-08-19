@@ -255,15 +255,16 @@ function categoriasDisponibles() {
   return [...new Set(todosLosAlimentos().map(a => a.categoria).filter(Boolean))].sort();
 }
 
-// query / categoria / ppMax son todos opcionales y se combinan (AND). Sin
-// ningún filtro activo no se muestra nada, para no listar los 750 de golpe.
-function buscarAlimentos(query, categoria, ppMax) {
+// query / categoria / ppMin / ppMax son todos opcionales y se combinan (AND).
+// Sin ningún filtro activo no se muestra nada, para no listar los 750 de golpe.
+function buscarAlimentos(query, categoria, ppMin, ppMax) {
   const palabras = quitarAcentos((query || "").trim().toLowerCase()).split(/\s+/).filter(p => p && !STOPWORDS.has(p));
   const hayTexto = palabras.length > 0;
   const hayCategoria = !!categoria;
+  const hayPpMin = ppMin !== null && ppMin !== undefined && ppMin !== "" && !isNaN(ppMin);
   const hayPpMax = ppMax !== null && ppMax !== undefined && ppMax !== "" && !isNaN(ppMax);
 
-  if (!hayTexto && !hayCategoria && !hayPpMax) return [];
+  if (!hayTexto && !hayCategoria && !hayPpMin && !hayPpMax) return [];
 
   const resultados = todosLosAlimentos()
     .filter(a => {
@@ -276,6 +277,12 @@ function buscarAlimentos(query, categoria, ppMax) {
         if (!palabras.every(p => texto.includes(p))) return false;
       }
       if (hayCategoria && a.categoria !== categoria) return false;
+      if (hayPpMin) {
+        // Con PP mínimo (ej. "quiero gastar saldo, no me sirve lo de 0"), un
+        // alimento sin PP verificado no tiene sentido incluirlo — no sabemos
+        // si supera el mínimo, así que se descarta directamente.
+        if (a.pp === null || a.pp === undefined || a.pp < Number(ppMin)) return false;
+      }
       if (hayPpMax) {
         // Sin PP verificado (null): se incluye solo si es saciante (vale 0 en
         // DNC, así que siempre "cabe" en cualquier PP máximo >= 0).
@@ -288,10 +295,10 @@ function buscarAlimentos(query, categoria, ppMax) {
 
   // El límite de 60 solo tiene sentido para acotar una búsqueda de texto libre
   // sin más filtros (podría matchear cientos de nombres parecidos). Con
-  // categoría y/o PP máximo activos, el propio filtro ya acota el volumen que
+  // categoría y/o PP mín/máx activos, el propio filtro ya acota el volumen que
   // el usuario quiere ver — cortar ahí ocultaba resultados reales (ej. "todas
   // las categorías, PP<=3" corta antes de llegar a ver nada por encima de 0).
-  const filtrosAcotan = hayCategoria || hayPpMax;
+  const filtrosAcotan = hayCategoria || hayPpMin || hayPpMax;
   return filtrosAcotan ? resultados : resultados.slice(0, 60);
 }
 
@@ -569,6 +576,7 @@ function abrirModal() {
   document.getElementById("modal-alimento").classList.remove("hidden");
   document.getElementById("buscador-alimento").value = "";
   document.getElementById("filtro-categoria").value = "";
+  document.getElementById("filtro-pp-min").value = "";
   document.getElementById("filtro-pp-max").value = "";
   document.getElementById("resultados-alimento").innerHTML = "";
   document.getElementById("calculadora-manual").classList.add("hidden");
@@ -589,8 +597,9 @@ function renderResultadosBusqueda() {
   const cont = document.getElementById("resultados-alimento");
   const query = document.getElementById("buscador-alimento").value;
   const categoria = document.getElementById("filtro-categoria").value;
+  const ppMin = document.getElementById("filtro-pp-min").value;
   const ppMax = document.getElementById("filtro-pp-max").value;
-  const resultados = buscarAlimentos(query, categoria, ppMax);
+  const resultados = buscarAlimentos(query, categoria, ppMin, ppMax);
   cont.innerHTML = "";
   resultados.forEach(a => {
     const li = document.createElement("li");
@@ -667,6 +676,7 @@ async function init() {
 
   document.getElementById("buscador-alimento").addEventListener("input", renderResultadosBusqueda);
   document.getElementById("filtro-categoria").addEventListener("change", renderResultadosBusqueda);
+  document.getElementById("filtro-pp-min").addEventListener("input", renderResultadosBusqueda);
   document.getElementById("filtro-pp-max").addEventListener("input", renderResultadosBusqueda);
 
   document.querySelectorAll(".franja-btn").forEach(btn => {
