@@ -457,7 +457,7 @@ input:focus-visible, select:focus-visible, button:focus-visible {
 }
 .historico-resumen { font-size: 0.78rem; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem; }
 
-/* Toast de confirmación + deshacer */
+/* Toast de confirmación (sin deshacer: ya está la "×" en cada fila) */
 .toast {
   position: fixed;
   left: 50%;
@@ -466,10 +466,7 @@ input:focus-visible, select:focus-visible, button:focus-visible {
   background: var(--surface-2);
   border: 2px solid var(--dnc);
   border-radius: var(--radius);
-  padding: 0.75rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
+  padding: 0.75rem 1.1rem;
   z-index: 200;
   box-shadow: 0 4px 0 rgba(0,0,0,0.4);
   max-width: calc(100vw - 2rem);
@@ -532,15 +529,3 @@ input:focus-visible, select:focus-visible, button:focus-visible {
   min-height: 44px;
 }
 
-.toast-undo {
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-family: var(--font-pixel);
-  font-size: 0.68rem;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 0.4rem 0.3rem;
-  min-height: 40px;
-  white-space: nowrap;
-}

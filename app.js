@@ -170,32 +170,20 @@ function borrarRegistro(fecha, id) {
   saveState();
 }
 
-// ---------- Toast de confirmación + deshacer ----------
+// ---------- Toast de confirmación ----------
 // Auditoría UX: añadir es un tap silencioso e instantáneo, fácil de duplicar
 // sin querer (doble tap, repetir la búsqueda). El toast confirma qué se añadió
-// y da unos segundos para deshacerlo sin tener que ir a buscar la fila a mano.
+// y de dónde salió el descuento. Sin botón de deshacer: ya está la "×" en
+// cada fila de la lista del día, un segundo control para lo mismo era ruido.
 let toastTimeoutId = null;
-function mostrarToast(mensaje, fecha) {
-  const dia = getDia(fecha);
-  const ultimoId = dia.registros[dia.registros.length - 1]?.id;
+function mostrarToast(mensaje) {
   const toast = document.getElementById("toast");
   const msgEl = document.getElementById("toast-msg");
-  const undoBtn = document.getElementById("toast-undo");
 
   msgEl.textContent = mensaje;
   toast.classList.remove("hidden");
   clearTimeout(toastTimeoutId);
-
-  const nuevoUndo = undoBtn.cloneNode(true);
-  undoBtn.replaceWith(nuevoUndo);
-  nuevoUndo.addEventListener("click", () => {
-    if (ultimoId) borrarRegistro(fecha, ultimoId);
-    toast.classList.add("hidden");
-    clearTimeout(toastTimeoutId);
-    renderHoy();
-  });
-
-  toastTimeoutId = setTimeout(() => toast.classList.add("hidden"), 4000);
+  toastTimeoutId = setTimeout(() => toast.classList.add("hidden"), 3000);
 }
 
 // ---------- Game over: aviso al agotar capital o extra ----------
@@ -719,7 +707,7 @@ function renderResultadosBusqueda() {
         const registro = registrarAlimento(fecha, a, franjaSeleccionada);
         cerrarModal();
         renderHoy();
-        mostrarToast(`${a.nombre} — ¡ÑAM! (${fraseOrigenToast(registro)})`, fecha);
+        mostrarToast(`${a.nombre} — ¡ÑAM! (${fraseOrigenToast(registro)})`);
       });
     }
     cont.appendChild(li);
@@ -816,7 +804,7 @@ async function init() {
     saveState();
     cerrarModal();
     renderHoy();
-    mostrarToast(`${nombre} — ¡ÑAM! (${fraseOrigenToast(registro)})`, todayStr());
+    mostrarToast(`${nombre} — ¡ÑAM! (${fraseOrigenToast(registro)})`);
     // reset calculadora
     ["calc-nombre", "calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra", "calc-gramos-racion"].forEach(id => {
       document.getElementById(id).value = "";
