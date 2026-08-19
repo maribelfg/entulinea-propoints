@@ -7,6 +7,7 @@ const EXTRA_SEMANAL_PP = 49;
 
 let ALIMENTOS = [];
 let state = null;
+let franjaSeleccionada = "desayuno";
 
 // ---------- Utilidades de fecha ----------
 function todayStr() {
@@ -95,8 +96,11 @@ function extraRestante(lunes) {
   return EXTRA_SEMANAL_PP - ppConsumidosExtraEnSemana(lunes);
 }
 
+const FRANJAS = ["desayuno", "comida", "cena", "snack"];
+const FRANJA_LABEL = { desayuno: "Desayuno", comida: "Comida", cena: "Cena", snack: "Snack" };
+
 // ---------- Lógica de añadir alimento (según esquema_tecnico.md) ----------
-function registrarAlimento(fecha, alimento) {
+function registrarAlimento(fecha, alimento, franja) {
   const dia = getDia(fecha);
   const modalidad = dia.modalidad;
   const pp = alimento.pp ?? 0;
@@ -106,6 +110,7 @@ function registrarAlimento(fecha, alimento) {
     racion: alimento.racion || "",
     pp,
     saciante_dnc: !!alimento.saciante_dnc,
+    franja: FRANJAS.includes(franja) ? franja : "snack",
     hora: new Date().toISOString()
   };
 
@@ -246,19 +251,41 @@ function quitarAcentos(s) {
   return s.normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
-function buscarAlimentos(query) {
-  const palabras = quitarAcentos(query.trim().toLowerCase()).split(/\s+/).filter(p => p && !STOPWORDS.has(p));
-  if (palabras.length === 0) return [];
+function categoriasDisponibles() {
+  return [...new Set(todosLosAlimentos().map(a => a.categoria).filter(Boolean))].sort();
+}
+
+// query / categoria / ppMax son todos opcionales y se combinan (AND). Sin
+// ningún filtro activo no se muestra nada, para no listar los 750 de golpe.
+function buscarAlimentos(query, categoria, ppMax) {
+  const palabras = quitarAcentos((query || "").trim().toLowerCase()).split(/\s+/).filter(p => p && !STOPWORDS.has(p));
+  const hayTexto = palabras.length > 0;
+  const hayCategoria = !!categoria;
+  const hayPpMax = ppMax !== null && ppMax !== undefined && ppMax !== "" && !isNaN(ppMax);
+
+  if (!hayTexto && !hayCategoria && !hayPpMax) return [];
+
   return todosLosAlimentos()
     .filter(a => {
-      // Muchos nombres de la BD histórica vienen "recortados" porque en la fuente
-      // original la categoría hacía de encabezado (ej. bajo "Quesos" -> "Manchego
-      // curado", sin la palabra "queso"). Se busca en nombre + categoría a la vez,
-      // y sin distinguir acentos (para que "atun" encuentre "Atún").
-      const texto = quitarAcentos((a.nombre + " " + (a.categoria || "")).toLowerCase());
-      return palabras.every(p => texto.includes(p));
+      if (hayTexto) {
+        // Muchos nombres de la BD histórica vienen "recortados" porque en la
+        // fuente original la categoría hacía de encabezado (ej. bajo "Quesos"
+        // -> "Manchego curado", sin la palabra "queso"). Se busca en nombre +
+        // categoría a la vez, y sin distinguir acentos.
+        const texto = quitarAcentos((a.nombre + " " + (a.categoria || "")).toLowerCase());
+        if (!palabras.every(p => texto.includes(p))) return false;
+      }
+      if (hayCategoria && a.categoria !== categoria) return false;
+      if (hayPpMax) {
+        // Sin PP verificado (null): se incluye solo si es saciante (vale 0 en
+        // DNC, así que siempre "cabe" en cualquier PP máximo >= 0).
+        const pp = a.pp === null || a.pp === undefined ? (a.saciante_dnc ? 0 : Infinity) : a.pp;
+        if (pp > Number(ppMax)) return false;
+      }
+      return true;
     })
-    .slice(0, 40);
+    .sort((a, b) => (a.pp ?? 0) - (b.pp ?? 0))
+    .slice(0, 60);
 }
 
 // ---------- Render: vista Hoy ----------
@@ -283,14 +310,30 @@ function renderHoy() {
     btn.classList.toggle("active", btn.dataset.modo === dia.modalidad);
   });
 
-  const lista = document.getElementById("lista-registros");
+  const contenedor = document.getElementById("lista-dia-por-franja");
   const vacio = document.getElementById("lista-vacia");
-  lista.innerHTML = "";
+  contenedor.innerHTML = "";
+
   if (dia.registros.length === 0) {
     vacio.style.display = "block";
-  } else {
-    vacio.style.display = "none";
-    dia.registros.slice().reverse().forEach(r => {
+    return;
+  }
+  vacio.style.display = "none";
+
+  FRANJAS.forEach(franja => {
+    const registrosFranja = dia.registros.filter(r => (r.franja || "snack") === franja);
+    if (registrosFranja.length === 0) return;
+
+    const totalFranja = registrosFranja.reduce((s, r) => s + r.pp_efectivo, 0);
+
+    const grupo = document.createElement("div");
+    grupo.className = "grupo-franja";
+    grupo.innerHTML = `<h2>${FRANJA_LABEL[franja]} <span class="grupo-total">${totalFranja} PP</span></h2>`;
+
+    const ul = document.createElement("ul");
+    ul.className = "registros-list";
+
+    registrosFranja.slice().reverse().forEach(r => {
       const li = document.createElement("li");
       li.className = "registro-item";
       const badge = r.saciante_dnc && r.origen_descuento === "ninguno"
@@ -315,9 +358,12 @@ function renderHoy() {
         borrarRegistro(fecha, r.id);
         renderHoy();
       });
-      lista.appendChild(li);
+      ul.appendChild(li);
     });
-  }
+
+    grupo.appendChild(ul);
+    contenedor.appendChild(grupo);
+  });
 }
 
 // ---------- Render: vista Extra ----------
@@ -452,6 +498,14 @@ function renderHistorico() {
       .filter(r => r.origen_descuento === "extra_semanal" || r.origen_descuento === "capital_diario+extra_semanal")
       .reduce((s, r) => s + (r.origen_descuento === "extra_semanal" ? r.pp : r.pp_desde_extra), 0);
 
+    const porFranjaTexto = FRANJAS
+      .map(f => {
+        const n = dia.registros.filter(r => (r.franja || "snack") === f).length;
+        return n > 0 ? `${FRANJA_LABEL[f]}: ${n}` : null;
+      })
+      .filter(Boolean)
+      .join(" · ");
+
     const li = document.createElement("li");
     li.className = "historico-item";
     li.innerHTML = `
@@ -461,6 +515,7 @@ function renderHistorico() {
         <span>Extra: ${totalExtra} PP</span>
         <span>${dia.registros.length} alimento(s)</span>
       </div>
+      ${porFranjaTexto ? `<div class="historico-resumen">${porFranjaTexto}</div>` : ""}
     `;
     lista.appendChild(li);
   });
@@ -490,22 +545,45 @@ function switchView(view) {
 }
 
 // ---------- Modal añadir alimento ----------
+function poblarFiltroCategoria() {
+  const select = document.getElementById("filtro-categoria");
+  const actual = select.value;
+  select.innerHTML = '<option value="">Todas las categorías</option>';
+  categoriasDisponibles().forEach(cat => {
+    const opt = document.createElement("option");
+    opt.value = cat;
+    opt.textContent = cat;
+    select.appendChild(opt);
+  });
+  select.value = actual;
+}
+
 function abrirModal() {
   document.getElementById("modal-alimento").classList.remove("hidden");
   document.getElementById("buscador-alimento").value = "";
+  document.getElementById("filtro-categoria").value = "";
+  document.getElementById("filtro-pp-max").value = "";
   document.getElementById("resultados-alimento").innerHTML = "";
   document.getElementById("calculadora-manual").classList.add("hidden");
   document.getElementById("ocr-status").classList.add("hidden");
   document.getElementById("calc-foto-etiqueta").value = "";
+  poblarFiltroCategoria();
+  franjaSeleccionada = "desayuno";
+  document.querySelectorAll(".franja-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.franja === "desayuno");
+  });
   document.getElementById("buscador-alimento").focus();
 }
 function cerrarModal() {
   document.getElementById("modal-alimento").classList.add("hidden");
 }
 
-function renderResultadosBusqueda(query) {
+function renderResultadosBusqueda() {
   const cont = document.getElementById("resultados-alimento");
-  const resultados = buscarAlimentos(query);
+  const query = document.getElementById("buscador-alimento").value;
+  const categoria = document.getElementById("filtro-categoria").value;
+  const ppMax = document.getElementById("filtro-pp-max").value;
+  const resultados = buscarAlimentos(query, categoria, ppMax);
   cont.innerHTML = "";
   resultados.forEach(a => {
     const li = document.createElement("li");
@@ -533,7 +611,7 @@ function renderResultadosBusqueda(query) {
         alert("Este alimento no tiene un valor ProPoints verificado fuera de DNC. Cambia a modo DNC (si es saciante) o usa la calculadora manual para asignarle un valor.");
         return;
       }
-      registrarAlimento(fecha, a);
+      registrarAlimento(fecha, a, franjaSeleccionada);
       cerrarModal();
       renderHoy();
     });
@@ -580,8 +658,15 @@ async function init() {
     if (e.target.id === "modal-alimento") cerrarModal();
   });
 
-  document.getElementById("buscador-alimento").addEventListener("input", (e) => {
-    renderResultadosBusqueda(e.target.value);
+  document.getElementById("buscador-alimento").addEventListener("input", renderResultadosBusqueda);
+  document.getElementById("filtro-categoria").addEventListener("change", renderResultadosBusqueda);
+  document.getElementById("filtro-pp-max").addEventListener("input", renderResultadosBusqueda);
+
+  document.querySelectorAll(".franja-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      franjaSeleccionada = btn.dataset.franja;
+      document.querySelectorAll(".franja-btn").forEach(b => b.classList.toggle("active", b === btn));
+    });
   });
 
   document.getElementById("btn-abrir-calculadora").addEventListener("click", () => {
@@ -616,7 +701,7 @@ async function init() {
     if (document.getElementById("calc-guardar").checked) {
       state.alimentosPersonalizados.push(alimento);
     }
-    registrarAlimento(todayStr(), alimento);
+    registrarAlimento(todayStr(), alimento, franjaSeleccionada);
     saveState();
     cerrarModal();
     renderHoy();

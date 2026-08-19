@@ -44,11 +44,8 @@
 
     <button id="btn-add-alimento" class="btn-primary btn-add">+ Añadir alimento</button>
 
-    <div class="lista-dia">
-      <h2>Añadido hoy</h2>
-      <ul id="lista-registros" class="registros-list"></ul>
-      <p id="lista-vacia" class="empty-msg">Todavía no has añadido nada hoy.</p>
-    </div>
+    <div class="lista-dia" id="lista-dia-por-franja"></div>
+    <p id="lista-vacia" class="empty-msg">Todavía no has añadido nada hoy.</p>
   </section>
 
   <!-- VISTA: EXTRA SEMANAL -->
@@ -111,7 +108,24 @@
       <button class="modal-close" id="modal-close-btn" aria-label="Cerrar">&times;</button>
     </div>
 
+    <div class="franja-selector">
+      <span class="franja-label">Franja</span>
+      <div class="franja-toggle" role="group" aria-label="Franja del día">
+        <button class="franja-btn active" data-franja="desayuno">Desayuno</button>
+        <button class="franja-btn" data-franja="comida">Comida</button>
+        <button class="franja-btn" data-franja="cena">Cena</button>
+        <button class="franja-btn" data-franja="snack">Snack</button>
+      </div>
+    </div>
+
     <input type="text" id="buscador-alimento" placeholder="Buscar alimento..." autocomplete="off">
+
+    <div class="filtros-row">
+      <select id="filtro-categoria">
+        <option value="">Todas las categorías</option>
+      </select>
+      <input type="number" id="filtro-pp-max" placeholder="PP máx." min="0" step="1">
+    </div>
 
     <ul id="resultados-alimento" class="resultados-list"></ul>
 
