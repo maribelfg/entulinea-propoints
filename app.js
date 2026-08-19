@@ -585,10 +585,15 @@ function renderHistorico() {
       .filter(Boolean)
       .join(" · ");
 
+    // Auditoría UX: el día de hoy seguía apareciendo igual que uno ya cerrado
+    // — se leía como un resumen final cuando en realidad sigue siendo editable
+    // desde la pestaña Hoy. Se marca aparte para que quede claro.
+    const esHoy = fecha === todayStr();
+
     const li = document.createElement("li");
     li.className = "historico-item";
     li.innerHTML = `
-      <div class="historico-fecha">${formatFechaCorta(fecha)} — ${dia.modalidad === "dnc" ? "DNC" : "Contar todo"}</div>
+      <div class="historico-fecha">${formatFechaCorta(fecha)} — ${dia.modalidad === "dnc" ? "DNC" : "Contar todo"} ${esHoy ? `<span class="badge en-curso">EN CURSO</span>` : ""}</div>
       <div class="historico-resumen">
         <span>Capital: ${totalCapital} PP</span>
         <span>Extra: ${totalExtra} PP</span>
