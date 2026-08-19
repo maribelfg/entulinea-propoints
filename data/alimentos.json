@@ -165,7 +165,7 @@
       "categoria": "Huevos",
       "racion": "1 ud",
       "pp": 3,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
@@ -220,7 +220,7 @@
       "categoria": "Pescados y mariscos",
       "racion": "140g",
       "pp": 5,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
@@ -286,7 +286,7 @@
       "categoria": "Legumbres y maíz",
       "racion": "120g",
       "pp": 3,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
@@ -2475,7 +2475,7 @@
       "categoria": "Quesos",
       "racion": "2 Cd (60g)",
       "pp": 1,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
@@ -2673,7 +2673,7 @@
       "categoria": "Quesos",
       "racion": "50g",
       "pp": 1,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
@@ -4070,7 +4070,7 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
@@ -6992,17 +6992,6 @@
       "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
     },
     {
-      "nombre": "Huevo de gallina",
-      "categoria": "Huevos",
-      "racion": "a saciedad (día DNC)",
-      "pp": null,
-      "saciante_dnc": true,
-      "fuente": "http://entulineapropoints.blogspot.com/2013/05/propoints-alimentos-saciantes.html",
-      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
-      "confianza": "MEDIA-ALTA",
-      "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
-    },
-    {
       "nombre": "Huevo de pato",
       "categoria": "Huevos",
       "racion": "a saciedad (día DNC)",
@@ -7081,17 +7070,6 @@
     },
     {
       "nombre": "Habas",
-      "categoria": "Legumbres y maíz",
-      "racion": "a saciedad (día DNC)",
-      "pp": null,
-      "saciante_dnc": true,
-      "fuente": "http://entulineapropoints.blogspot.com/2013/05/propoints-alimentos-saciantes.html",
-      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
-      "confianza": "MEDIA-ALTA",
-      "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
-    },
-    {
-      "nombre": "Lentejas",
       "categoria": "Legumbres y maíz",
       "racion": "a saciedad (día DNC)",
       "pp": null,
@@ -7312,17 +7290,6 @@
     },
     {
       "nombre": "Anca de rana",
-      "categoria": "Pescados y mariscos",
-      "racion": "a saciedad (día DNC)",
-      "pp": null,
-      "saciante_dnc": true,
-      "fuente": "http://entulineapropoints.blogspot.com/2013/05/propoints-alimentos-saciantes.html",
-      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
-      "confianza": "MEDIA-ALTA",
-      "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
-    },
-    {
-      "nombre": "Atún al natural escurrido",
       "categoria": "Pescados y mariscos",
       "racion": "a saciedad (día DNC)",
       "pp": null,
@@ -7663,17 +7630,6 @@
       "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
     },
     {
-      "nombre": "Mejillones al natural",
-      "categoria": "Pescados y mariscos",
-      "racion": "a saciedad (día DNC)",
-      "pp": null,
-      "saciante_dnc": true,
-      "fuente": "http://entulineapropoints.blogspot.com/2013/05/propoints-alimentos-saciantes.html",
-      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
-      "confianza": "MEDIA-ALTA",
-      "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
-    },
-    {
       "nombre": "Mojarra",
       "categoria": "Pescados y mariscos",
       "racion": "a saciedad (día DNC)",
@@ -7971,28 +7927,6 @@
       "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
     },
     {
-      "nombre": "Queso crema para untar 0% MG",
-      "categoria": "Quesos",
-      "racion": "a saciedad (día DNC)",
-      "pp": null,
-      "saciante_dnc": true,
-      "fuente": "http://entulineapropoints.blogspot.com/2013/05/propoints-alimentos-saciantes.html",
-      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
-      "confianza": "MEDIA-ALTA",
-      "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
-    },
-    {
-      "nombre": "Queso fresco de Burgos 0% MG",
-      "categoria": "Quesos",
-      "racion": "a saciedad (día DNC)",
-      "pp": null,
-      "saciante_dnc": true,
-      "fuente": "http://entulineapropoints.blogspot.com/2013/05/propoints-alimentos-saciantes.html",
-      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
-      "confianza": "MEDIA-ALTA",
-      "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
-    },
-    {
       "nombre": "Ajo tierno",
       "categoria": "Verduras y hortalizas",
       "racion": "a saciedad (día DNC)",
@@ -8148,17 +8082,6 @@
     },
     {
       "nombre": "Col china",
-      "categoria": "Verduras y hortalizas",
-      "racion": "a saciedad (día DNC)",
-      "pp": null,
-      "saciante_dnc": true,
-      "fuente": "http://entulineapropoints.blogspot.com/2013/05/propoints-alimentos-saciantes.html",
-      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
-      "confianza": "MEDIA-ALTA",
-      "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
-    },
-    {
-      "nombre": "Col lombarda",
       "categoria": "Verduras y hortalizas",
       "racion": "a saciedad (día DNC)",
       "pp": null,

@@ -242,15 +242,20 @@ function todosLosAlimentos() {
 
 const STOPWORDS = new Set(["de", "del", "la", "el", "los", "las", "y", "o", "con", "sin", "un", "una"]);
 
+function quitarAcentos(s) {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "");
+}
+
 function buscarAlimentos(query) {
-  const palabras = query.trim().toLowerCase().split(/\s+/).filter(p => p && !STOPWORDS.has(p));
+  const palabras = quitarAcentos(query.trim().toLowerCase()).split(/\s+/).filter(p => p && !STOPWORDS.has(p));
   if (palabras.length === 0) return [];
   return todosLosAlimentos()
     .filter(a => {
       // Muchos nombres de la BD histórica vienen "recortados" porque en la fuente
       // original la categoría hacía de encabezado (ej. bajo "Quesos" -> "Manchego
-      // curado", sin la palabra "queso"). Se busca en nombre + categoría a la vez.
-      const texto = (a.nombre + " " + (a.categoria || "")).toLowerCase();
+      // curado", sin la palabra "queso"). Se busca en nombre + categoría a la vez,
+      // y sin distinguir acentos (para que "atun" encuentre "Atún").
+      const texto = quitarAcentos((a.nombre + " " + (a.categoria || "")).toLowerCase());
       return palabras.every(p => texto.includes(p));
     })
     .slice(0, 40);
