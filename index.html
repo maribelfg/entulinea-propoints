@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>entulínea ProPoints</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>entulínea <span>ProPoints</span></h1>
+  <nav class="tabs">
+    <button class="tab-btn active" data-view="hoy">Hoy</button>
+    <button class="tab-btn" data-view="extra">Extra</button>
+    <button class="tab-btn" data-view="peso">Peso</button>
+    <button class="tab-btn" data-view="historico">Histórico</button>
+  </nav>
+</header>
+
+<main id="app">
+
+  <!-- VISTA: HOY -->
+  <section id="view-hoy" class="view active">
+    <div class="saldo-cards">
+      <div class="card saldo-card" id="card-capital">
+        <span class="card-label">Capital diario</span>
+        <span class="card-value" id="capital-restante">--</span>
+        <span class="card-sub">de <span id="capital-total">--</span> PP</span>
+      </div>
+      <div class="card saldo-card" id="card-extra">
+        <span class="card-label">Extra semanal</span>
+        <span class="card-value" id="extra-restante">--</span>
+        <span class="card-sub">de 49 PP</span>
+      </div>
+    </div>
+
+    <div class="modalidad-selector">
+      <span class="modalidad-label">Modo de hoy</span>
+      <div class="modalidad-toggle" role="group" aria-label="Modalidad del día">
+        <button class="modo-btn active" data-modo="contar">Contar todo</button>
+        <button class="modo-btn" data-modo="dnc">DNC</button>
+      </div>
+    </div>
+
+    <button id="btn-add-alimento" class="btn-primary btn-add">+ Añadir alimento</button>
+
+    <div class="lista-dia">
+      <h2>Añadido hoy</h2>
+      <ul id="lista-registros" class="registros-list"></ul>
+      <p id="lista-vacia" class="empty-msg">Todavía no has añadido nada hoy.</p>
+    </div>
+  </section>
+
+  <!-- VISTA: EXTRA SEMANAL -->
+  <section id="view-extra" class="view">
+    <div class="card saldo-card wide">
+      <span class="card-label">Extra semanal restante</span>
+      <span class="card-value" id="extra-restante-2">--</span>
+      <span class="card-sub">de 49 PP · semana del <span id="semana-inicio">--</span></span>
+    </div>
+
+    <div class="reserva-form">
+      <h2>Reservar puntos para una ocasión</h2>
+      <div class="form-row">
+        <input type="text" id="reserva-etiqueta" placeholder="Ej. cena del sábado">
+        <input type="number" id="reserva-pp" placeholder="PP" min="1" step="1">
+        <button id="btn-reservar" class="btn-secondary">Reservar</button>
+      </div>
+    </div>
+
+    <div class="reservas-list-wrap">
+      <h2>Reservas de esta semana</h2>
+      <ul id="lista-reservas" class="registros-list"></ul>
+      <p id="reservas-vacia" class="empty-msg">No tienes puntos reservados.</p>
+    </div>
+  </section>
+
+  <!-- VISTA: PESO -->
+  <section id="view-peso" class="view">
+    <div class="peso-form">
+      <h2>Registrar peso</h2>
+      <div class="form-row">
+        <input type="date" id="peso-fecha">
+        <input type="number" id="peso-valor" placeholder="kg" min="1" step="0.1">
+        <button id="btn-add-peso" class="btn-secondary">Guardar</button>
+      </div>
+    </div>
+    <div class="peso-grafica-wrap">
+      <canvas id="peso-canvas" width="600" height="260"></canvas>
+      <p id="peso-vacio" class="empty-msg">Todavía no hay registros de peso.</p>
+    </div>
+    <div class="peso-lista-wrap">
+      <ul id="lista-peso" class="registros-list"></ul>
+    </div>
+  </section>
+
+  <!-- VISTA: HISTÓRICO -->
+  <section id="view-historico" class="view">
+    <h2>Días anteriores</h2>
+    <ul id="lista-historico" class="historico-list"></ul>
+    <p id="historico-vacio" class="empty-msg">Todavía no hay días registrados.</p>
+  </section>
+
+</main>
+
+<!-- MODAL: AÑADIR ALIMENTO -->
+<div id="modal-alimento" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Añadir alimento</h2>
+      <button class="modal-close" id="modal-close-btn" aria-label="Cerrar">&times;</button>
+    </div>
+
+    <input type="text" id="buscador-alimento" placeholder="Buscar alimento..." autocomplete="off">
+
+    <ul id="resultados-alimento" class="resultados-list"></ul>
+
+    <div class="calculadora-toggle">
+      <button id="btn-abrir-calculadora" class="btn-link">¿No lo encuentras? Calcular por nutrientes →</button>
+    </div>
+
+    <div id="calculadora-manual" class="calculadora hidden">
+      <h3>Calculadora ProPoints</h3>
+      <label>Nombre del alimento
+        <input type="text" id="calc-nombre" placeholder="Ej. Tortilla de patatas">
+      </label>
+      <div class="calc-grid">
+        <label>Proteína (g)<input type="number" id="calc-proteina" min="0" step="0.1"></label>
+        <label>Carbohidratos (g)<input type="number" id="calc-carbo" min="0" step="0.1"></label>
+        <label>Grasa (g)<input type="number" id="calc-grasa" min="0" step="0.1"></label>
+        <label>Fibra (g)<input type="number" id="calc-fibra" min="0" step="0.1"></label>
+      </div>
+      <div class="calc-resultado">
+        PP calculados: <strong id="calc-resultado-pp">0</strong>
+      </div>
+      <div class="calc-actions">
+        <label class="checkbox-row">
+          <input type="checkbox" id="calc-guardar">
+          Guardar en mi lista de alimentos
+        </label>
+        <button id="btn-add-calculado" class="btn-primary">Añadir al día</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
