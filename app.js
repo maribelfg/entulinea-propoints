@@ -103,6 +103,7 @@ function registrarAlimento(fecha, alimento) {
   let registro = {
     id: Date.now() + "-" + Math.random().toString(36).slice(2, 7),
     nombre: alimento.nombre,
+    racion: alimento.racion || "",
     pp,
     saciante_dnc: !!alimento.saciante_dnc,
     hora: new Date().toISOString()
@@ -207,10 +208,11 @@ function renderHoy() {
         "capital_diario": "del capital diario",
         "capital_diario+extra_semanal": `capital + extra`
       }[r.origen_descuento] || "";
+      const metaTexto = r.racion ? `${escapeHtml(r.racion)} · ${origenTexto}` : origenTexto;
       li.innerHTML = `
         <div class="registro-info">
           <span class="registro-nombre">${escapeHtml(r.nombre)} ${badge}</span>
-          <span class="registro-meta">${origenTexto}</span>
+          <span class="registro-meta">${metaTexto}</span>
         </div>
         <span class="registro-pp ${r.pp_efectivo === 0 ? "zero" : ""}">${r.pp_efectivo === 0 ? "0 PP" : r.pp + " PP"}</span>
         <button class="btn-del" data-id="${r.id}" aria-label="Eliminar">&times;</button>
@@ -485,11 +487,13 @@ async function init() {
   document.getElementById("btn-add-calculado").addEventListener("click", () => {
     const nombre = document.getElementById("calc-nombre").value.trim();
     if (!nombre) { alert("Ponle un nombre al alimento."); return; }
+    const racion = document.getElementById("calc-racion").value.trim();
+    if (!racion) { alert("Indica a qué cantidad o ración corresponden esos nutrientes (ej. 10g, 1 cucharada)."); return; }
     const pp = actualizarCalculoManual();
     const alimento = {
       nombre,
       categoria: "Personalizado",
-      racion: "según nutrientes indicados",
+      racion,
       pp,
       saciante_dnc: false,
       fuente: "calculadora manual",
@@ -504,7 +508,7 @@ async function init() {
     cerrarModal();
     renderHoy();
     // reset calculadora
-    ["calc-nombre", "calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra"].forEach(id => {
+    ["calc-nombre", "calc-racion", "calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra"].forEach(id => {
       document.getElementById(id).value = "";
     });
     document.getElementById("calc-guardar").checked = false;
