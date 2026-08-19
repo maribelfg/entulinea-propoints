@@ -505,7 +505,16 @@ function renderResultadosBusqueda(query) {
   resultados.forEach(a => {
     const li = document.createElement("li");
     li.className = "resultado-item";
-    const ppTexto = a.pp === null || a.pp === undefined ? "?? PP" : a.pp + " PP";
+    const sinPpVerificado = a.pp === null || a.pp === undefined;
+    const fecha = todayStr();
+    const modalidadHoy = getDia(fecha).modalidad;
+    // Sin PP verificado, "?? PP" solo es realmente un problema en modo "contar
+    // todo": si el alimento es saciante y hoy es DNC, vale 0 sin duda, aunque
+    // no sepamos su valor fuera de DNC.
+    const sePuedeAnadirHoy = !sinPpVerificado || (a.saciante_dnc && modalidadHoy === "dnc");
+    const ppTexto = sinPpVerificado
+      ? (a.saciante_dnc && modalidadHoy === "dnc" ? "0 PP (DNC)" : "?? PP")
+      : a.pp + " PP";
     const saciante = a.saciante_dnc ? `<span class="badge dnc">DNC</span>` : "";
     li.innerHTML = `
       <div class="registro-info">
@@ -515,11 +524,11 @@ function renderResultadosBusqueda(query) {
       <span class="registro-pp">${ppTexto}</span>
     `;
     li.addEventListener("click", () => {
-      if (a.pp === null || a.pp === undefined) {
-        alert("Este alimento no tiene un valor ProPoints verificado. Usa la calculadora manual para asignarle un valor.");
+      if (!sePuedeAnadirHoy) {
+        alert("Este alimento no tiene un valor ProPoints verificado fuera de DNC. Cambia a modo DNC (si es saciante) o usa la calculadora manual para asignarle un valor.");
         return;
       }
-      registrarAlimento(todayStr(), a);
+      registrarAlimento(fecha, a);
       cerrarModal();
       renderHoy();
     });
