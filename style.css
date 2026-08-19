@@ -248,6 +248,19 @@ input[type="text"], input[type="number"], input[type="date"] {
 .calculadora.hidden { display: none; }
 .calculadora h3 { margin: 0 0 0.75rem; font-size: 0.95rem; }
 .calc-hint { font-size: 0.8rem; color: var(--text-muted); margin: 0 0 0.5rem; }
+
+.ocr-row { margin-bottom: 0.5rem; }
+.btn-ocr {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+.ocr-status.hidden { display: none; }
+.ocr-status { text-align: center; }
+.ocr-status.error { color: var(--danger); }
+.ocr-status.working { color: var(--text-muted); }
+.ocr-status.done { color: var(--accent); }
 .calculadora label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; }
 .calculadora label input { width: 100%; margin-top: 0.25rem; }
 .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 0.75rem; }

@@ -124,7 +124,13 @@
       <label>Nombre del alimento
         <input type="text" id="calc-nombre" placeholder="Ej. Tortilla de patatas">
       </label>
-      <p class="calc-hint">Introduce los valores tal como aparecen en la etiqueta, por 100g:</p>
+      <div class="ocr-row">
+        <label for="calc-foto-etiqueta" class="btn-secondary btn-ocr">📷 Leer etiqueta con la cámara</label>
+        <input type="file" id="calc-foto-etiqueta" accept="image/*" capture="environment" hidden>
+      </div>
+      <p id="ocr-status" class="calc-hint ocr-status hidden"></p>
+
+      <p class="calc-hint">Revisa y ajusta los valores (tal como aparecen en la etiqueta, por 100g):</p>
       <div class="calc-grid">
         <label>Proteína /100g<input type="number" id="calc-proteina" min="0" step="0.1"></label>
         <label>Carbohidratos /100g<input type="number" id="calc-carbo" min="0" step="0.1"></label>
@@ -148,6 +154,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

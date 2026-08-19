@@ -148,6 +148,87 @@ function calcularPP(proteina, carbo, grasa, fibra) {
   return Math.round(val);
 }
 
+// ---------- OCR de etiqueta nutricional (Tesseract.js, cliente) ----------
+// Nunca rellena y guarda directo: solo escribe en los campos editables de la
+// calculadora, que la usuaria revisa y corrige antes de "Añadir al día".
+function parsearEtiquetaNutricional(texto) {
+  const t = texto.toLowerCase().replace(/,/g, ".");
+
+  function buscarValor(patrones) {
+    for (const patron of patrones) {
+      const m = t.match(patron);
+      if (m) {
+        const num = parseFloat(m[1]);
+        if (!isNaN(num)) return num;
+      }
+    }
+    return null;
+  }
+  // número tolerante a errores típicos de OCR: dígitos, punto opcional, con
+  // "g" u "og"/"gr" pegado o separado detrás.
+  const num = "(\\d+(?:\\.\\d+)?)\\s*(?:g|gr)?";
+
+  return {
+    proteina: buscarValor([
+      new RegExp("prote[ií]nas?[^\\d]{0,15}" + num),
+    ]),
+    carbo: buscarValor([
+      new RegExp("hidratos de carbono[^\\d]{0,15}" + num),
+      new RegExp("carbohidratos[^\\d]{0,15}" + num),
+      new RegExp("hidratos[^\\d]{0,15}" + num),
+    ]),
+    grasa: buscarValor([
+      // "grasas totales" / "grasas" seguido del número, siempre que las
+      // primeras ~20 letras después del número no sean "saturad..." (evita
+      // capturar la fila de "de las cuales saturadas" como si fuera el total).
+      new RegExp("grasas?\\s*totales?[^\\d]{0,15}" + num + "(?![^a-z]{0,20}saturad)"),
+      new RegExp("grasas?(?!\\s*saturad)[^\\d]{0,15}" + num + "(?![^a-z]{0,20}saturad)"),
+    ]),
+    fibra: buscarValor([
+      new RegExp("fibra(?:\\s*aliment\\w*)?[^\\d]{0,15}" + num),
+    ]),
+  };
+}
+
+async function ocrEtiqueta(file) {
+  const statusEl = document.getElementById("ocr-status");
+  statusEl.classList.remove("hidden", "error", "done");
+  statusEl.classList.add("working");
+  statusEl.textContent = "Leyendo etiqueta...";
+
+  try {
+    if (typeof Tesseract === "undefined") {
+      throw new Error("El lector de imágenes no se pudo cargar (revisa tu conexión).");
+    }
+    const { data } = await Tesseract.recognize(file, "spa");
+    const valores = parsearEtiquetaNutricional(data.text);
+
+    let encontrados = 0;
+    if (valores.proteina !== null) { document.getElementById("calc-proteina").value = valores.proteina; encontrados++; }
+    if (valores.carbo !== null) { document.getElementById("calc-carbo").value = valores.carbo; encontrados++; }
+    if (valores.grasa !== null) { document.getElementById("calc-grasa").value = valores.grasa; encontrados++; }
+    if (valores.fibra !== null) { document.getElementById("calc-fibra").value = valores.fibra; encontrados++; }
+    actualizarCalculoManual();
+
+    statusEl.classList.remove("working");
+    if (encontrados === 0) {
+      statusEl.classList.add("error");
+      statusEl.textContent = "No se ha podido leer ningún valor. Escríbelos a mano.";
+    } else if (encontrados < 4) {
+      statusEl.classList.add("error");
+      statusEl.textContent = `Se han rellenado ${encontrados} de 4 valores. Revisa y completa el resto a mano.`;
+    } else {
+      statusEl.classList.add("done");
+      statusEl.textContent = "Valores leídos — revísalos antes de añadir.";
+    }
+  } catch (err) {
+    console.error(err);
+    statusEl.classList.remove("working");
+    statusEl.classList.add("error");
+    statusEl.textContent = "No se ha podido leer la foto. Escribe los valores a mano.";
+  }
+}
+
 // ---------- Carga de alimentos ----------
 async function cargarAlimentos() {
   const res = await fetch("data/alimentos.json");
@@ -409,6 +490,8 @@ function abrirModal() {
   document.getElementById("buscador-alimento").value = "";
   document.getElementById("resultados-alimento").innerHTML = "";
   document.getElementById("calculadora-manual").classList.add("hidden");
+  document.getElementById("ocr-status").classList.add("hidden");
+  document.getElementById("calc-foto-etiqueta").value = "";
   document.getElementById("buscador-alimento").focus();
 }
 function cerrarModal() {
@@ -493,6 +576,11 @@ async function init() {
 
   ["calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra", "calc-gramos-racion"].forEach(id => {
     document.getElementById(id).addEventListener("input", actualizarCalculoManual);
+  });
+
+  document.getElementById("calc-foto-etiqueta").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) ocrEtiqueta(file);
   });
 
   document.getElementById("btn-add-calculado").addEventListener("click", () => {
