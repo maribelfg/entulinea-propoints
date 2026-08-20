@@ -442,8 +442,6 @@ input:focus-visible, select:focus-visible, button:focus-visible {
 .calc-resultado { font-size: 0.9rem; margin: 0.75rem 0; color: var(--text-muted); }
 .calc-resultado strong { color: var(--accent); font-size: 1.3rem; font-family: var(--font-pixel); }
 .calc-actions { display: flex; flex-direction: column; gap: 0.6rem; }
-.checkbox-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; }
-.checkbox-row input { width: 22px; height: 22px; margin: 0; }
 
 .ocr-row { margin-bottom: 0.5rem; }
 .btn-ocr {

@@ -816,9 +816,10 @@ async function init() {
       version: "usuario",
       confianza: "N/A (cálculo propio)"
     };
-    if (document.getElementById("calc-guardar").checked) {
-      state.alimentosPersonalizados.push(alimento);
-    }
+    // Siempre se guarda en el mapa de alimentos: antes era opcional con una
+    // casilla que pasaba desapercibida (checkbox pequeño junto al CTA
+    // principal) y hacía perder alimentos calculados sin darse cuenta.
+    state.alimentosPersonalizados.push(alimento);
     const registro = registrarAlimento(todayStr(), alimento, franjaSeleccionada);
     saveState();
     cerrarModal();
@@ -828,7 +829,6 @@ async function init() {
     ["calc-nombre", "calc-proteina", "calc-carbo", "calc-grasa", "calc-fibra", "calc-gramos-racion"].forEach(id => {
       document.getElementById(id).value = "";
     });
-    document.getElementById("calc-guardar").checked = false;
     document.getElementById("calc-resultado-pp").textContent = "0";
   });
 
