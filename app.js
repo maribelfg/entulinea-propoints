@@ -4,6 +4,7 @@
 const STORAGE_KEY = "entulinea_propoints_v1";
 const CAPITAL_DIARIO_PP = 29; // fijado — usuaria: 168cm/90kg/44a, fórmula verificada
 const EXTRA_SEMANAL_PP = 49;
+const ACEITE_GRATIS_DNC_LIMITE = 2; // veces al día, no cantidad — ver registrarAlimento
 
 let ALIMENTOS = [];
 let state = null;
@@ -124,10 +125,22 @@ function registrarAlimento(fecha, alimento, franja) {
     hora: new Date().toISOString()
   };
 
-  if (modalidad === "dnc" && alimento.saciante_dnc) {
+  const esAceiteGraso = alimento.categoria === "Aceites y grasas";
+  const vecesAceiteHoy = dia.registros.filter(r => r.categoria === "Aceites y grasas").length;
+
+  if (modalidad === "dnc" && esAceiteGraso && vecesAceiteHoy < ACEITE_GRATIS_DNC_LIMITE) {
+    // Regla histórica DNC: las 2 primeras veces del día que se añade aceite o
+    // grasa vegetal son gratis, cuenten en cucharadita o cucharada; desde la
+    // 3ª se cobra el PP normal (ver investigación del proyecto).
+    registro.categoria = alimento.categoria;
+    registro.origen_descuento = "ninguno";
+    registro.aceite_gratis = true;
+    registro.pp_efectivo = 0;
+  } else if (modalidad === "dnc" && alimento.saciante_dnc) {
     registro.origen_descuento = "ninguno";
     registro.pp_efectivo = 0;
   } else if (modalidad === "dnc" && !alimento.saciante_dnc) {
+    registro.categoria = alimento.categoria;
     registro.origen_descuento = "extra_semanal";
     registro.pp_efectivo = pp;
   } else {
@@ -155,6 +168,7 @@ function registrarAlimento(fecha, alimento, franja) {
 // Frase de origen para el toast — el usuario pidió que quede claro cuándo un
 // bocado toca el Extra semanal, en vez de solo enterarse mirando la tarjeta.
 function fraseOrigenToast(registro) {
+  if (registro.aceite_gratis) return "aceite gratis de hoy (DNC)";
   switch (registro.origen_descuento) {
     case "ninguno": return "sin coste (DNC)";
     case "capital_diario": return "de tu capital diario";
@@ -443,15 +457,15 @@ function renderHoy() {
     registrosFranja.slice().reverse().forEach(r => {
       const li = document.createElement("li");
       li.className = "registro-item";
-      const badge = r.saciante_dnc && r.origen_descuento === "ninguno"
-        ? `<span class="badge dnc">DNC</span>`
-        : "";
-      const origenTexto = {
+      const badge = r.aceite_gratis
+        ? `<span class="badge dnc">GRATIS</span>`
+        : (r.saciante_dnc && r.origen_descuento === "ninguno" ? `<span class="badge dnc">DNC</span>` : "");
+      const origenTexto = r.aceite_gratis ? "aceite gratis del día" : ({
         "ninguno": "sin coste (DNC)",
         "extra_semanal": "del extra semanal",
         "capital_diario": "del capital diario",
         "capital_diario+extra_semanal": `capital + extra`
-      }[r.origen_descuento] || "";
+      }[r.origen_descuento] || "");
       const metaTexto = r.racion ? `${escapeHtml(r.racion)} · ${origenTexto}` : origenTexto;
       li.innerHTML = `
         <div class="registro-info">

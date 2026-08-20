@@ -176,11 +176,11 @@
       "categoria": "Huevos",
       "racion": "2 uds",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Bacalao fresco",
@@ -1397,33 +1397,33 @@
       "categoria": "Bebidas sin alcohol",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Agua sin gas",
       "categoria": "Bebidas sin alcohol",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Agua de sabores sin azúcar",
       "categoria": "Bebidas sin alcohol",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Bebida isotónica",
@@ -1485,11 +1485,11 @@
       "categoria": "Bebidas sin alcohol",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Cerveza sin alcohol, botellín",
@@ -1518,11 +1518,11 @@
       "categoria": "Bebidas sin alcohol",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Horchata de chufa",
@@ -1540,11 +1540,11 @@
       "categoria": "Bebidas sin alcohol",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Mosto de uva",
@@ -1628,11 +1628,11 @@
       "categoria": "Bebidas sin alcohol",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Refresco cola con gas, vaso",
@@ -1683,11 +1683,11 @@
       "categoria": "Bebidas sin alcohol",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Tónica, vaso",
@@ -1837,11 +1837,11 @@
       "categoria": "Bebidas sin alcohol",
       "racion": "1 vaso (200ml)",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Aceitunas negras",
@@ -1903,11 +1903,11 @@
       "categoria": "Aperitivos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Galletas rellenas de queso",
@@ -1991,11 +1991,11 @@
       "categoria": "Aperitivos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Bacon o panceta, loncha fina",
@@ -3091,11 +3091,11 @@
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Algas desecadas",
@@ -3146,22 +3146,22 @@
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Esencias, todo tipo",
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Fideos de chocolate",
@@ -3223,11 +3223,11 @@
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Levadura de panadería fresca",
@@ -3256,11 +3256,11 @@
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Pan rallado",
@@ -3289,44 +3289,44 @@
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Salsa de soja",
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Salsa Worcestershire",
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Tabasco",
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Tahini/crema de sésamo",
@@ -3344,11 +3344,11 @@
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Tomate seco en aceite escurrido",
@@ -3366,33 +3366,33 @@
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Vinagre",
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Zumo de limón natural",
       "categoria": "Condimentos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Alioli",
@@ -3828,22 +3828,22 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Brécol",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Cebolla",
@@ -3927,11 +3927,11 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Endibia",
@@ -3949,11 +3949,11 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Escarola",
@@ -3993,44 +3993,44 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Fresa silvestre",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Germen de soja fresco",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Guisante tierno",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Hinojo",
@@ -4048,11 +4048,11 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Lechuga",
@@ -4092,22 +4092,22 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Patata dulce fresca",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Pepino",
@@ -4125,22 +4125,22 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Pimiento",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Puerro",
@@ -4202,22 +4202,22 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Tallo de apio",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Tomate",
@@ -4235,44 +4235,44 @@
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Tomillo",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Trufa",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Verdolaga",
       "categoria": "Verduras y hortalizas",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Zanahoria",
@@ -5885,22 +5885,22 @@
       "categoria": "Sopas y caldos",
       "racion": "1 plato (250ml)",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Caldo casero vegetal sin aceite",
       "categoria": "Sopas y caldos",
       "racion": "libre",
       "pp": 0,
-      "saciante_dnc": false,
+      "saciante_dnc": true,
       "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "ALTA",
-      "notas": ""
+      "notas": "Marcado saciante por decisión de la usuaria (2026-08-20): DNC trata sobre qué resta puntos, no sobre valor nutricional — un alimento a 0 PP fijo es funcionalmente saciante aunque la fuente histórica no lo listara en esa sección."
     },
     {
       "nombre": "Crema de tomates",
@@ -8266,6 +8266,39 @@
       "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
       "confianza": "MEDIA-ALTA",
       "notas": "Sin valor PP verificado en tabla; PP fuera de DNC sería estimable con la calculadora manual."
+    },
+    {
+      "nombre": "Aceite, todo tipo (1 cucharadita)",
+      "categoria": "Aceites y grasas",
+      "racion": "1 ct (4g)",
+      "pp": 1,
+      "saciante_dnc": false,
+      "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
+      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
+      "confianza": "ALTA",
+      "notas": "Añadido 2026-08-20 — la fuente original ya daba esta ración junto a la de cucharada, no se había incluido en la BD. Relevante para la regla DNC: 2 cucharaditas de aceite/grasa vegetal gratis al día, la 3ª cuenta."
+    },
+    {
+      "nombre": "Mantequilla (1 cucharadita)",
+      "categoria": "Aceites y grasas",
+      "racion": "1 ct (5g)",
+      "pp": 1,
+      "saciante_dnc": false,
+      "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
+      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
+      "confianza": "ALTA",
+      "notas": "Añadido 2026-08-20 — la fuente original ya daba esta ración junto a la de cucharada, no se había incluido en la BD."
+    },
+    {
+      "nombre": "Margarina light (2 cucharaditas)",
+      "categoria": "Aceites y grasas",
+      "racion": "2 ct (10g)",
+      "pp": 1,
+      "saciante_dnc": false,
+      "fuente": "http://entulineapropoints.blogspot.com/2013/05/lista-de-propoints.html",
+      "version": "entulinea-propoints-2013 (pre-DNC 2015, mecanismo equivalente)",
+      "confianza": "ALTA",
+      "notas": "Añadido 2026-08-20 — la fuente original daba esta ración (2ct=10g) junto a la de cucharada, no se había incluido en la BD."
     }
   ]
 }
