@@ -324,16 +324,17 @@ function categoriasDisponibles() {
   return [...new Set(todosLosAlimentos().map(a => a.categoria).filter(Boolean))].sort();
 }
 
-// query / categoria / ppMin / ppMax son todos opcionales y se combinan (AND).
-// Sin ningún filtro activo no se muestra nada, para no listar los 750 de golpe.
-function buscarAlimentos(query, categoria, ppMin, ppMax) {
+// query / categoria / ppMin / ppMax / soloSaciante son todos opcionales y se
+// combinan (AND). Sin ningún filtro activo no se muestra nada, para no listar
+// los 750 de golpe.
+function buscarAlimentos(query, categoria, ppMin, ppMax, soloSaciante) {
   const palabras = quitarAcentos((query || "").trim().toLowerCase()).split(/\s+/).filter(p => p && !STOPWORDS.has(p));
   const hayTexto = palabras.length > 0;
   const hayCategoria = !!categoria;
   const hayPpMin = ppMin !== null && ppMin !== undefined && ppMin !== "" && !isNaN(ppMin);
   const hayPpMax = ppMax !== null && ppMax !== undefined && ppMax !== "" && !isNaN(ppMax);
 
-  if (!hayTexto && !hayCategoria && !hayPpMin && !hayPpMax) return [];
+  if (!hayTexto && !hayCategoria && !hayPpMin && !hayPpMax && !soloSaciante) return [];
 
   const primeraPalabra = palabras[0] || "";
 
@@ -348,6 +349,7 @@ function buscarAlimentos(query, categoria, ppMin, ppMax) {
         if (!palabras.every(p => texto.includes(p))) return false;
       }
       if (hayCategoria && a.categoria !== categoria) return false;
+      if (soloSaciante && !a.saciante_dnc) return false;
       if (hayPpMin) {
         // Con PP mínimo (ej. "quiero gastar saldo, no me sirve lo de 0"), un
         // alimento sin PP verificado no tiene sentido incluirlo — no sabemos
@@ -383,7 +385,7 @@ function buscarAlimentos(query, categoria, ppMin, ppMax) {
   // categoría y/o PP mín/máx activos, el propio filtro ya acota el volumen que
   // el usuario quiere ver — cortar ahí ocultaba resultados reales (ej. "todas
   // las categorías, PP<=3" corta antes de llegar a ver nada por encima de 0).
-  const filtrosAcotan = hayCategoria || hayPpMin || hayPpMax;
+  const filtrosAcotan = hayCategoria || hayPpMin || hayPpMax || soloSaciante;
   return filtrosAcotan ? resultados : resultados.slice(0, 60);
 }
 
@@ -658,6 +660,7 @@ function abrirModal() {
   document.getElementById("filtro-categoria").value = "";
   document.getElementById("filtro-pp-min").value = "";
   document.getElementById("filtro-pp-max").value = "";
+  document.getElementById("filtro-solo-saciante").checked = false;
   document.getElementById("resultados-alimento").innerHTML = "";
   document.getElementById("calculadora-manual").classList.add("hidden");
   document.getElementById("ocr-status").classList.add("hidden");
@@ -679,7 +682,8 @@ function renderResultadosBusqueda() {
   const categoria = document.getElementById("filtro-categoria").value;
   const ppMin = document.getElementById("filtro-pp-min").value;
   const ppMax = document.getElementById("filtro-pp-max").value;
-  const resultados = buscarAlimentos(query, categoria, ppMin, ppMax);
+  const soloSaciante = document.getElementById("filtro-solo-saciante").checked;
+  const resultados = buscarAlimentos(query, categoria, ppMin, ppMax, soloSaciante);
   cont.innerHTML = "";
   resultados.forEach(a => {
     const li = document.createElement("li");
@@ -760,6 +764,7 @@ async function init() {
   document.getElementById("filtro-categoria").addEventListener("change", renderResultadosBusqueda);
   document.getElementById("filtro-pp-min").addEventListener("input", renderResultadosBusqueda);
   document.getElementById("filtro-pp-max").addEventListener("input", renderResultadosBusqueda);
+  document.getElementById("filtro-solo-saciante").addEventListener("change", renderResultadosBusqueda);
 
   document.querySelectorAll(".franja-btn").forEach(btn => {
     btn.addEventListener("click", () => {
